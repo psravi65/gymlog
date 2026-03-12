@@ -113,7 +113,22 @@ function OnboardingApp({onComplete}){
     try{
       const res=await fetch(CF_WORKER_URL + '/validate-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:trimmed})});
       const data=await res.json();
-      if(data.valid){setAccessCode(trimmed);setCodeVerified(true);if(data.clientName)setForm(f=>({...f,name:data.clientName}));}
+      if(data.valid){
+
+  // if plan already exists in database, open it immediately
+  if(data.plan){
+    const plan = JSON.parse(data.plan);
+    onComplete(plan);
+    return;
+  }
+
+  setAccessCode(trimmed);
+  setCodeVerified(true);
+
+  if(data.clientName){
+    setForm(f=>({...f,name:data.clientName}));
+  }
+}
       else setCodeError(data.reason||'Invalid code. Contact your coach.');
     }catch{setCodeError('Could not verify. Check your internet connection and try again.');}
     setCodeChecking(false);
