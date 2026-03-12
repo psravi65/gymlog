@@ -141,10 +141,26 @@ function OnboardingApp({onComplete}){
     let si=0;setStatusMsg(msgs[0]);
     const iv=setInterval(()=>{si=(si+1)%msgs.length;setStatusMsg(msgs[si]);},2800);
     try{
-      const res=await fetch(FN_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({answers:form, accessCode})});
-      const data=await res.json();
-      if(!res.ok)throw new Error(data.error||'Generation failed');
-      const plan=JSON.parse(data.plan);
+      const res = await fetch(FN_URL,{
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({answers:form, accessCode})
+});
+
+const data = await res.json();
+
+if(!res.ok){
+  throw new Error(data.error || "Generation failed");
+}
+
+let plan;
+
+try{
+  plan = JSON.parse(data.plan);
+}catch(err){
+  console.error("Invalid JSON returned from API:", data.plan);
+  throw new Error("AI returned invalid plan format");
+}
       const prefix=(plan.profile.prefix||form.name.slice(0,2).toLowerCase())+'_';
       plan._prefix=prefix;
       S.set(prefix+'plan',plan);
