@@ -117,10 +117,10 @@ function OnboardingApp({onComplete}){
 
   // if plan already exists in database, open it immediately
   if(data.plan){
-    const plan = JSON.parse(data.plan);
-    onComplete(plan);
-    return;
-  }
+  const plan = data.plan;
+  onComplete(plan);
+  return;
+}
 
   setAccessCode(trimmed);
   setCodeVerified(true);
@@ -153,14 +153,7 @@ if(!res.ok){
   throw new Error(data.error || "Generation failed");
 }
 
-let plan;
-
-try{
-  plan = JSON.parse(data.plan);
-}catch(err){
-  console.error("Invalid JSON returned from API:", data.plan);
-  throw new Error("AI returned invalid plan format");
-}
+const plan = data.plan;
       const prefix=(plan.profile.prefix||form.name.slice(0,2).toLowerCase())+'_';
       plan._prefix=prefix;
       S.set(prefix+'plan',plan);
