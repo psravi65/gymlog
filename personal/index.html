@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#13271e"><meta name="description" content="Your personal training journal. Build routines, log every set, and follow your progress with GymLog Personal.">
+  <title>GymLog Personal · Your training journal</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <aside class="sidebar">
+    <a class="brand" href="#workout"><span class="brandmark">G<span>↗</span></span><span>GymLog<small>PERSONAL</small></span></a>
+    <nav aria-label="Main navigation"><a href="#workout" data-nav="workout"><span>◫</span> Workout</a><a href="#plans" data-nav="plans"><span>▤</span> My routines</a><a href="#history" data-nav="history"><span>◷</span> History</a><a href="#progress" data-nav="progress"><span>↗</span> Progress</a></nav>
+    <div class="sidebar-bottom"><div class="storage-icon">⌁</div><strong>Your training. Your space.</strong><p>Records stay in this browser.<br>Keep a backup to take them with you.</p><button class="text-button" id="export">Export backup ↗</button><label class="text-button import-label">Restore backup<input type="file" id="import" accept="application/json,.json"></label></div>
+  </aside>
+  <main id="main" tabindex="-1"><header class="topbar"><span>THE TRAINING JOURNAL</span><time id="today"></time></header><div id="view"></div><footer>Built one session at a time. <span>GymLog Personal</span></footer></main>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <dialog id="editor"><form id="routine-form"><div class="dialog-head"><div><p class="eyebrow">MAKE IT YOURS</p><h2 id="editor-title">New routine</h2></div><button type="button" class="icon-button" data-close aria-label="Close routine editor">×</button></div><label>Routine name<input name="name" maxlength="70" required placeholder="e.g. Upper body A"></label><label>Focus<input name="focus" maxlength="120" placeholder="e.g. Chest, shoulders & triceps"></label><div class="section-heading"><h3>Exercises</h3><button type="button" class="text-button" id="add-exercise">+ Add exercise</button></div><div id="exercise-fields"></div><p class="helper">Set targets that fit your training. You can change weight and reps during a workout.</p><div class="dialog-actions"><button type="button" class="button secondary" data-close>Cancel</button><button class="button primary" type="submit">Save routine</button></div></form></dialog>
+  <dialog id="confirm-dialog"><form method="dialog"><h2 id="confirm-title">Confirm</h2><p id="confirm-text"></p><div class="dialog-actions"><button class="button secondary" value="cancel">Cancel</button><button class="button primary" value="confirm" id="confirm-action">Confirm</button></div></form></dialog>
+</body></html>
